@@ -18,9 +18,13 @@ module.exports = {
             loader: 'babel-loader',
             exclude: /node_modules/
         }, {
-            test: /\.css$/,
+            test: /\.scss$/,
             use: extractStyles.extract({
-                use: 'css-loader'
+                use: [{
+                    loader: 'css-loader'
+                }, {
+                    loader: 'sass-loader'
+                }]
             })
         }]
     },
