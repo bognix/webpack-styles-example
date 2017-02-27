@@ -1,3 +1,9 @@
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+
+const extractStyles = new ExtractTextPlugin({
+    filename: 'bundle.css'
+});
+
 module.exports = {
     entry: [
         './example/index.js'
@@ -6,20 +12,19 @@ module.exports = {
         filename: 'bundle.js',
     },
     module: {
-      loaders: [
+        loaders: [
         {
-          test: /\.js$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/
-      },{
-        test: /\.css$/,
-        use: [
-          {
-            loader: 'style-loader'
-          }, {
-            loader: 'css-loader'
-          }
-        ]}
-      ]
-    }
+            test: /\.js$/,
+            loader: 'babel-loader',
+            exclude: /node_modules/
+        }, {
+            test: /\.css$/,
+            use: extractStyles.extract({
+                use: 'css-loader'
+            })
+        }]
+    },
+    plugins: [
+        extractStyles
+    ]
 };
